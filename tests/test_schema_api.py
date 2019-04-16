@@ -98,4 +98,4 @@ def test_get_schema():
         response = schema_api.get_schema(solution, app, str_map)
 
     # assert
-    assert str(response) == sql
+    assert response.get_command() == sql

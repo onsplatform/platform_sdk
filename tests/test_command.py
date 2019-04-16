@@ -54,7 +54,7 @@ def test_create_schema_query_with_fields():
     model = 'pessoa'
 
     # action
-    query = str(Command(model, fields, None))
+    query = SelectCommand(model, fields, None).get_command()
 
     # assert
     assert query == 'select nome_longo as nome, idade as idade from pessoa'
@@ -67,7 +67,7 @@ def test_create_schema_query_with_field():
     model = 'pessoa'
 
     # action
-    query = str(Command(model, fields, None))
+    query = SelectCommand(model, fields, None).get_command()
 
     # assert
     assert query == 'select idade as idade from pessoa'
@@ -78,7 +78,7 @@ def test_create_schema_query_with_parameter_less():
     # arrange
 
     # action
-    query = str(Command())
+    query = SelectCommand()
 
     # assert
 
@@ -89,7 +89,7 @@ def test_create_schema_query_with_only_model():
     model = 'pessoa'
 
     # action
-    query = str(Command(model))
+    query = SelectCommand(model)
 
     # assert
 
@@ -102,7 +102,7 @@ def test_create_schema_query_with_model_and_field():
     fields = [field_one]
 
     # action
-    query = str(Command(model, fields))
+    query = SelectCommand(model, fields)
 
     # assert
 
@@ -114,7 +114,7 @@ def test_create_schema_query_with_model_none():
     fields = [field_one]
 
     # action
-    query = str(Command(None, fields, None))
+    query = SelectCommand(None, fields, None)
 
     # assert
 
@@ -125,7 +125,7 @@ def test_create_schema_query_with_field_none():
     model = 'pessoa'
 
     # action
-    query = str(Command(None, None, None))
+    query = SelectCommand(None, None, None)
 
     # assert
 
@@ -139,7 +139,7 @@ def test_create_schema_query_with_field_and_filter():
     filter_one = Filter('byName', 'name = :name')
 
     # action
-    query = str(Command(model, fields, filter_one))
+    query = SelectCommand(model, fields, filter_one).get_command()
 
     # assert
     assert query == 'select idade as idade from pessoa where name = :name'
@@ -154,7 +154,7 @@ def test_create_schema_query_with_fields_and_filter():
     filter_one = Filter('byName', 'name = :name')
 
     # action
-    query = str(Command(model, fields, filter_one))
+    query = SelectCommand(model, fields, filter_one).get_command()
 
     # assert
     assert query == 'select nome_longo as nome, idade as idade from pessoa where name = :name'

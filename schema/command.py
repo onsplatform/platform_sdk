@@ -1,25 +1,11 @@
 
-class Command:
-    str_select  = 'select '
-    str_from    = ' from '
-    str_where   = ' where '
+from enum import Enum
 
+class Command:
     def __init__(self, model, fields, filters):
         self.model = model
         self.fields = fields
         self.filter = filters
-
-    def get_from(self):
-        if not self.model:
-            raise ValueError('Model is required.')
-
-        return self.str_from + self.model
-
-    def get_fields(self):
-        if not self.fields:
-            raise ValueError('At least one field is required.')
-
-        return str.join(', ', [str(f) for f in self.fields])
 
     def get_filter(self):
         if not self.filter:
@@ -27,8 +13,27 @@ class Command:
 
         return self.str_where + self.filter.get_expression()
 
-    def __repr__(self):
-        fields = self.get_fields()
+
+class SelectCommand(Command):
+
+    str_select = 'select '
+    str_from = ' from '
+    str_where = ' where '
+
+    def get_from(self):
+        if not self.model:
+            raise ValueError('Model is required.')
+
+        return self.str_from + self.model
+
+    def get_select_fields(self):
+        if not self.fields:
+            raise ValueError('At least one field is required.')
+
+        return str.join(', ', [str(f) for f in self.fields])
+
+    def get_command(self):
+        fields = self.get_select_fields()
         str_from = self.get_from()
         str_filter = self.get_filter()
         return self.str_select + fields + str_from + str_filter
@@ -50,3 +55,9 @@ class Filter:
 
     def get_expression(self):
         return self.expression
+
+
+class Parameters:
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value

@@ -12,7 +12,7 @@ class SchemaApi:
         model = api_response['model']
         fields = self._get_fields(api_response['fields'])
         filters = self._get_filter(api_response['filter'])
-        return Command(model, fields, filters)
+        return SelectCommand(model, fields, filters)
 
     def _get_schema_response(self, solution, app, _map):
         response = requests.get(self._get_schema_api_url(solution, app, _map))
