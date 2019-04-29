@@ -9,7 +9,7 @@ from ..schema.schema_api import *
 db = orm.Database()
 
 # todo: remove
-sqlite_path = 'D:\\projetos\\domain_reader\\sdk\\db.sqlite3'
+sqlite_path = os.path.join(os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir)), 'db.sqlite3')
 if os.path.exists(sqlite_path):
     os.remove(sqlite_path)
 db.bind(provider='sqlite', filename='..\\db.sqlite3', create_db=True)
