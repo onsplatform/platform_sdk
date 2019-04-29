@@ -21,10 +21,9 @@ class SchemaApi:
         with orm.db_session():
             ret = list(orm.select(d for d in proxy_model))
 
-        data = self.get_response_json(ret, api_response['fields'])
-        return data
+        return self.get_response_data(ret, api_response['fields'])
 
-    def get_response_json(self, entities, fields):
+    def get_response_data(self, entities, fields):
         return [{f['alias']: getattr(e, f['alias']) for f in fields} for e in entities]
 
     def _get_schema_response(self, solution, app, _map):
