@@ -19,7 +19,20 @@ class SchemaApi:
         self.db.generate_mapping(create_tables=True)
 
         with orm.db_session():
-            return list(orm.select(d for d in proxy_model))
+            ret = list(orm.select(d for d in proxy_model))
+
+        return self.get_response_json(ret, api_response['fields'])
+
+    def get_response_json(self, entities, fields):
+        dto = []
+
+        for entity in entities:
+            field_list = {}
+            for field in fields:
+                field_list[field['alias']] = getattr(entity, field['alias'])
+            dto.append(field_list)
+
+        return dto
 
     def _get_schema_response(self, solution, app, _map):
         response = requests.get(self._get_schema_api_url(solution, app, _map))

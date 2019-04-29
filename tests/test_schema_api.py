@@ -4,17 +4,22 @@ import requests
 import requests_mock
 
 from pony import orm
-from sdk.schema.schema_api import *
+from ..schema.schema_api import *
 
 db = orm.Database()
 
+# todo: remove
 sqlite_path = 'D:\\projetos\\domain_reader\\sdk\\db.sqlite3'
 if os.path.exists(sqlite_path):
     os.remove(sqlite_path)
 db.bind(provider='sqlite', filename='..\\db.sqlite3', create_db=True)
 with orm.db_session():
-    db.execute('create table tb_usina (id integer primary key autoincrement, nome_longo text);')
-    db.execute('insert into tb_usina (nome_longo) values ("angra");')
+    db.execute(
+        'create table tb_usina (id integer primary key autoincrement, nome_longo text, desc text);')
+    db.execute(
+        'insert into tb_usina (nome_longo, desc) values ("angra 1", "descricao 1");')
+    db.execute(
+        'insert into tb_usina (nome_longo, desc) values ("angra 2", "descricao 2");')
 
 
 def test_get_schema():
@@ -26,7 +31,8 @@ def test_get_schema():
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
-            {"name": "nome_longo", "alias": "nome", "type": "str"}
+            {"name": "nome_longo", "alias": "nome", "type": "str"},
+            {"name": "desc", "alias": "descricao", "type": "str"}
         ],
         "filter": {"name": "byName", "expression": 'nome = :nome'}
     }
@@ -39,4 +45,8 @@ def test_get_schema():
         response = schema_api.get_schema(solution, app, _map)
 
     # assert
-    assert len(response) == 1
+    assert len(response) == 2
+    assert response[0]['nome'] == 'angra 1'
+    assert response[1]['nome'] == 'angra 2'
+    assert response[0]['descricao'] == 'descricao 1'
+    assert response[1]['descricao'] == 'descricao 2'
