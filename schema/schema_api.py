@@ -11,6 +11,9 @@ class SchemaApi:
 
     def get_schema(self, solution, app, _map):
         api_response = self._get_schema_response(solution, app, _map)
+        if api_response is None:
+            return
+
         api_response = api_response.json()
 
         model = self._get_model(api_response['model'], api_response['fields'])
@@ -20,7 +23,7 @@ class SchemaApi:
 
         with orm.db_session():
             ret = list(orm.select(d for d in proxy_model))
-
+        
         return self.get_response_data(ret, api_response['fields'])
 
     def get_response_data(self, entities, fields):
