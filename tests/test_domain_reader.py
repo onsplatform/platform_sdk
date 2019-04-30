@@ -1,24 +1,7 @@
-import os
-
 from pony import orm
 from platform_sdk.reader.domain_reader import *
 
 db = orm.Database()
-
-# todo: remove
-sqlite_path = os.path.join(os.path.abspath(os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), os.pardir)), 'db.sqlite3')
-if os.path.exists(sqlite_path):
-    os.remove(sqlite_path)
-
-db.bind(provider='sqlite', filename='..\\db.sqlite3', create_db=True)
-with orm.db_session():
-    db.execute(
-        'create table tb_usina (id integer primary key autoincrement, nome_longo text, desc text);')
-    db.execute(
-        'insert into tb_usina (nome_longo, desc) values ("angra 1", "descricao 1");')
-    db.execute(
-        'insert into tb_usina (nome_longo, desc) values ("angra 2", "descricao 2");')
 
 
 def test_init_domain_reader():
@@ -65,6 +48,20 @@ def test_get_fields():
     assert len(fields) == 1
 
 
+def test_get_data_with_no_api_response():
+    # arrange
+    app = 'teif'
+    solution = 'sager'
+    _map = 'usinaDTO'
+    domain_reader = DomainReader(db)
+
+    # action
+    data = domain_reader.get_data(solution, app, _map)
+
+    # assert
+    assert data == None
+
+
 def test_get_response_data():
     # arrange
     domain_reader = DomainReader(db)
@@ -96,15 +93,28 @@ def test_get_response_data():
     assert data[1]['descricao'] == 'descricao 2'
 
 
-def test_get_data_with_no_api_response():
+def test_get_response_data_empty():
     # arrange
-    app = 'teif'
-    solution = 'sager'
-    _map = 'usinaDTO'
     domain_reader = DomainReader(db)
+    api_response = {
+        "model": {"name": "Usina", "table": "tb_usina"},
+        "fields": [
+            {"name": "nome_longo", "alias": "nome", "type": "str"},
+            {"name": "desc", "alias": "descricao", "type": "str"}
+        ],
+        "filter": {"name": "byName", "expression": 'nome = :nome'}
+    }
 
     # action
-    data = domain_reader.get_data(solution, app, _map)
+    class Usina:
+        def __init__(self, nome, descricao):
+            self.nome = nome
+            self.descricao = descricao
+
+    usina1 = Usina('angra 1', 'descricao 1')
+    usina2 = Usina('angra 2', 'descricao 2')
+    data = domain_reader._get_response_data(
+        list([]), api_response['fields'])
 
     # assert
-    assert data == None
+    assert not data

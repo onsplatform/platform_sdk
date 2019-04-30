@@ -14,16 +14,19 @@ class DomainReader:
 
         model = self._get_model(api_response['model'], api_response['fields'])
 
-        proxy_model = model.build(self.db)
-        self.db.generate_mapping(create_tables=True)
-
-        with orm.db_session():
-            ret = list(orm.select(d for d in proxy_model))
+        ret = self._execute_query(model)
 
         return self._get_response_data(ret, api_response['fields'])
 
+    def _execute_query(self, model): # pragma: no cover
+        proxy_model = model.build(self.db)
+        self.db.generate_mapping(create_tables=True)
+        with orm.db_session():
+            return list(orm.select(d for d in proxy_model))
+
     def _get_response_data(self, entities, fields):
-        return [{f['alias']: getattr(e, f['alias']) for f in fields} for e in entities]
+        if entities:
+            return [{f['alias']: getattr(e, f['alias']) for f in fields} for e in entities]
 
     def _get_fields(self, fields):
         return [RemoteField(f['alias'], str, f['name']) for f in fields]
