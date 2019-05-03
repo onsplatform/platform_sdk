@@ -5,10 +5,8 @@ class SchemaApi:
 
     def get_schema(self, solution, app, _map):
         api_response = self._get_schema_response(solution, app, _map)
-        if api_response is None:
-            return
-
-        return api_response.json()
+        if api_response:
+            return api_response.json()
 
     def _get_schema_response(self, solution, app, _map):
         response = requests.get(self._get_schema_api_url(solution, app, _map))
