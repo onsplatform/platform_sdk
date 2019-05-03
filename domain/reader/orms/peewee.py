@@ -9,7 +9,7 @@ class PeeweeSqliteDbFactory:
         return peewee.SqliteDatabase(self.path)
 
 
-class PeeWee:
+class Peewee:
     BASE_CLASSES = (peewee.Model, )
 
     FIELD_TYPES = {

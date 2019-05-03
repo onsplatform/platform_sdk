@@ -1,6 +1,6 @@
 import mock
 
-from reader.orms.peewee import PeeWee
+from reader.orms.peewee import Peewee
 from reader.mapper import RemoteField, RemoteMap
 
 
@@ -19,7 +19,7 @@ def test_remote_field():
 def test_remote_map():
     # arrange
     remote_field = RemoteField('nome', 'str', 'nome_longo')
-    remote_map = RemoteMap('Usina', 'tb_usina', [remote_field], orm=PeeWee)
+    remote_map = RemoteMap('Usina', 'tb_usina', [remote_field], orm=Peewee)
 
     # assert
     assert remote_map.name == 'Usina'
@@ -30,7 +30,7 @@ def test_remote_map():
 def test_remote_map_build(db):
     # arrange
     remote_field = RemoteField('nome', 'str', 'nome_longo')
-    remote_map = RemoteMap('Usina', 'tb_usina', [remote_field], orm=PeeWee)
+    remote_map = RemoteMap('Usina', 'tb_usina', [remote_field], orm=Peewee)
 
     # action
     ret = remote_map.build(database=db)
