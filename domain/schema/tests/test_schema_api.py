@@ -2,7 +2,8 @@ import pytest
 import requests
 import requests_mock
 
-from platform_sdk.schema.schema_api import *
+
+from schema.api import SchemaApi
 
 
 def test_get_schema():
@@ -47,7 +48,7 @@ def test_get_schema_response_with_body():
         m.get(schema_api._get_schema_api_url(
             solution, app, str_map), text='resp')
         response = schema_api._get_schema_response(solution, app, str_map)
-    
+
     # assert
     assert response is not None
 

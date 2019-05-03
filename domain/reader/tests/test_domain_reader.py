@@ -1,10 +1,7 @@
-from pony import orm
-from platform_sdk.reader.domain_reader import *
-
-db = orm.Database()
+from reader import DomainReader
 
 
-def test_init_domain_reader():
+def test_init_domain_reader(db):
     # arrange
     domain_reader = DomainReader(db)
 
@@ -12,7 +9,7 @@ def test_init_domain_reader():
     assert domain_reader.schema_api is not None
 
 
-def test_get_model():
+def test_get_model(db):
     # arrange
     domain_reader = DomainReader(db)
     api_response = {
@@ -36,7 +33,7 @@ def test_get_model():
     assert model.fields[0].column == "nome_longo"
 
 
-def test_get_fields():
+def test_get_fields(db):
     # arrange
     fields_dict = [{'name': 'field_1', 'alias': 'alias_1'}]
 
@@ -48,7 +45,7 @@ def test_get_fields():
     assert len(fields) == 1
 
 
-def test_get_data_with_no_api_response():
+def test_get_data_with_no_api_response(db):
     # arrange
     app = 'teif'
     solution = 'sager'
@@ -62,7 +59,7 @@ def test_get_data_with_no_api_response():
     assert data == None
 
 
-def test_get_response_data():
+def test_get_response_data(db):
     # arrange
     domain_reader = DomainReader(db)
     api_response = {
@@ -93,7 +90,7 @@ def test_get_response_data():
     assert data[1]['descricao'] == 'descricao 2'
 
 
-def test_get_response_data_empty():
+def test_get_response_data_empty(db):
     # arrange
     domain_reader = DomainReader(db)
     api_response = {
