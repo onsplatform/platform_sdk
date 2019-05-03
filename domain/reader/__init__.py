@@ -10,12 +10,10 @@ class DomainReader:
     def get_data(self, solution, app, _map):
         api_response = self.schema_api.get_schema(solution, app, _map)
 
-        if not api_response:
-            return
-
-        model = self._get_model(api_response['model'], api_response['fields'])
-        data = self._execute_query(model)
-        return self._get_response_data(data, api_response['fields'])
+        if api_response:
+            model = self._get_model(api_response['model'], api_response['fields'])
+            data = self._execute_query(model)
+            return self._get_response_data(data, api_response['fields'])
 
     def _execute_query(self, model): # pragma: no cover
         proxy_model = model.build(self.db)
@@ -27,7 +25,8 @@ class DomainReader:
                     for e in entities]
 
     def _get_fields(self, fields):
-        return [RemoteField(f['alias'], str, f['name']) for f in fields]
+        return [RemoteField(
+            f['alias'], str, f['name']) for f in fields]
 
     def _get_model(self, model, fields):
         return RemoteMap(
