@@ -3,8 +3,9 @@ from ..schema.api import SchemaApi
 
 
 class DomainReader:
-    def __init__(self, db):
-        self.db = db
+    def __init__(self, orm):
+        self.orm = orm
+        self.db = orm.db_factory('sqlite', path='wee.db')()
         self.schema_api = SchemaApi()
 
     def get_data(self, solution, app, _map):
@@ -30,4 +31,4 @@ class DomainReader:
 
     def _get_model(self, model, fields):
         return RemoteMap(
-            model['name'], model['table'], self._get_fields(fields), self.db)
+            model['name'], model['table'], self._get_fields(fields), self.orm)
