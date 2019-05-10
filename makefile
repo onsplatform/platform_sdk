@@ -11,4 +11,5 @@ migrate:
 clean:
 	@find . -name *.pyc -delete
 	
-
+dist:
+	@python setup.py sdist
