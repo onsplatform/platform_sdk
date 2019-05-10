@@ -27,7 +27,7 @@ class DomainReader:
 
     def _get_fields(self, fields):
         return [RemoteField(
-            f['alias'], str, f['column_name']) for f in fields]
+            f['alias'], f['field_type'], f['column_name']) for f in fields]
 
     def _get_model(self, model, fields):
         return RemoteMap(
