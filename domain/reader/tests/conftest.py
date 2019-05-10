@@ -1,7 +1,7 @@
 import pytest
 
 
-from reader.orms.peewee import Peewee
+from domain.reader.orms.peewee import Peewee
 
 
 @pytest.fixture(scope='class')

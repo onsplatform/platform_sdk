@@ -3,7 +3,7 @@ import requests
 import requests_mock
 
 
-from schema.api import SchemaApi
+from domain.schema.api import SchemaApi
 
 
 def test_get_schema():

@@ -1,5 +1,5 @@
-from reader.mapper import RemoteField, RemoteMap
-from schema.api import SchemaApi
+from domain.reader.mapper import RemoteField, RemoteMap
+from domain.schema.api import SchemaApi
 
 
 class DomainReader:
