@@ -15,8 +15,8 @@ def test_get_model(db):
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
-            {"name": "nome_longo", "alias": "nome", "type": "str"},
-            {"name": "desc", "alias": "descricao", "type": "str"}
+            {"column_name": "nome_longo", "alias": "nome", "field_type": "str"},
+            {"column_name": "desc", "alias": "descricao", "field_type": "str"}
         ],
         "filter": {"name": "byName", "expression": 'nome = :nome'}
     }
@@ -29,13 +29,13 @@ def test_get_model(db):
     assert model.name == "Usina"
     assert model.table == "tb_usina"
     assert model.fields[0].name == "nome"
-    assert model.fields[0].field_type == str
+    assert model.fields[0].field_type == "str"
     assert model.fields[0].column_name == "nome_longo"
 
 
 def test_get_fields(db):
     # arrange
-    fields_dict = [{'name': 'field_1', 'alias': 'alias_1'}]
+    fields_dict = [{'column_name': 'field_1', 'alias': 'alias_1', "field_type": "str"}]
 
     # action
     domain_reader = DomainReader(db)
@@ -66,8 +66,8 @@ def test_get_response_data(db):
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
-            {"name": "nome_longo", "alias": "nome", "type": "str"},
-            {"name": "desc", "alias": "descricao", "type": "str"}
+            {"column_name": "nome_longo", "alias": "nome", "field_type": "str"},
+            {"column_name": "desc", "alias": "descricao", "field_type": "str"}
         ],
         "filter": {"name": "byName", "expression": 'nome = :nome'}
     }
@@ -97,8 +97,8 @@ def test_get_response_data_empty(db):
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
-            {"name": "nome_longo", "alias": "nome", "type": "str"},
-            {"name": "desc", "alias": "descricao", "type": "str"}
+            {"column_name": "nome_longo", "alias": "nome", "field_type": "str"},
+            {"column_name": "desc", "alias": "descricao", "field_type": "str"}
         ],
         "filter": {"name": "byName", "expression": 'nome = :nome'}
     }
