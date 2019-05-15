@@ -28,14 +28,14 @@ class DomainReader:
             query = proxy_model.select().where(SQL(sql_query['sql_query'], sql_query['query_params']))
         else:
             query = proxy_model.select()
-
+        
         return list([d for d in query])
 
     def _get_sql_query(self, sql_filter, params):
         query_params = ()
         matches = re.finditer(r"([:,\$]\w+)", sql_filter, re.MULTILINE)
         for arg in matches:
-            # named parameter, eg: $name :name
+            # named parameters, eg: $name :name
             arg = arg.group()
             # get named value from params
             val = params.get(arg[1:])
