@@ -40,8 +40,10 @@ class DomainReader:
             # get named value from params
             val = params.get(arg[1:])
             # if parameter is list or begins with $, make tuple
-            if (isinstance(val, list) or arg[0:1] == '$'):
-                val = tuple(val)
+            if (isinstance(val, list)):
+                val = tuple(val,)
+            elif (arg[0:1] == '$'):
+                val = (val,)
             # make a tuple
             query_params = (*query_params, val)
             # replace argument with %s
