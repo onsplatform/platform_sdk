@@ -8,10 +8,13 @@ pytest = "*"
 requests-mock = "*"
 ipdb = "*"
 mock = "*"
+colorama = "*"
+autopep8 = "*"
 
 [packages]
 requests = "==2.21.0"
 peewee = "==3.9.5"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.7"

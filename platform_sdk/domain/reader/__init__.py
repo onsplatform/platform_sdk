@@ -1,24 +1,56 @@
+import re
+
 from .mapper import RemoteField, RemoteMap
 from ..schema.api import SchemaApi
+from peewee import SQL
 
 
 class DomainReader:
     def __init__(self, orm):
         self.orm = orm
-        self.db = orm.db_factory('sqlite', path='wee.db')()
+        self.db = orm.db_factory('postgres')()
         self.schema_api = SchemaApi()
 
-    def get_data(self, solution, app, _map):
+    def get_data(self, solution, app, _map, filter_name, params):
         api_response = self.schema_api.get_schema(solution, app, _map)
 
         if api_response:
             model = self._get_model(api_response['model'], api_response['fields'])
-            data = self._execute_query(model)
+            sql_filter = self._get_sql_filter(filter_name, api_response['filters'])
+            sql_query = self._get_sql_query(sql_filter, params)
+            data = self._execute_query(model, sql_query)
             return self._get_response_data(data, api_response['fields'])
 
-    def _execute_query(self, model): # pragma: no cover
+
+    def _execute_query(self, model, sql_query):  # pragma: no cover
         proxy_model = model.build(self.db)
-        return list([d for d in proxy_model])
+        if (filter):
+            query = proxy_model.select().where(SQL(sql_query['sql_query'], sql_query['query_params']))
+        else:
+            query = proxy_model.select()
+
+        return list([d for d in query])
+
+    def _get_sql_query(self, sql_filter, params):
+        query_params = ()
+        matches = re.finditer(r"([:,\$]\w+)", sql_filter, re.MULTILINE)
+        for arg in matches:
+            # named parameter, eg: $name :name
+            arg = arg.group()
+            # get named value from params
+            val = params.get(arg[1:])
+            # if parameter is list or begins with $, make tuple
+            if (isinstance(val, list) or arg[0:1] == '$'):
+                val = tuple(val)
+            # make a tuple
+            query_params = (*query_params, val)
+            # replace argument with %s
+            sql_filter = sql_filter.replace(arg, '%s')
+
+        return {
+            'sql_query': sql_filter,
+            'query_params': query_params
+        }
 
     def _get_response_data(self, entities, fields):
         if entities:
@@ -32,3 +64,7 @@ class DomainReader:
     def _get_model(self, model, fields):
         return RemoteMap(
             model['name'], model['table'], self._get_fields(fields), self.orm)
+
+    def _get_sql_filter(self, filter_name, filters):
+        if filters:
+            return next(f['expression'] for f in filters if f['name'] == filter_name)

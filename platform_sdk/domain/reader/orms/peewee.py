@@ -8,6 +8,10 @@ class PeeweeSqliteDbFactory:
     def __call__(self):
         return peewee.SqliteDatabase(self.path)
 
+class PostgresDbFactory:
+    def __call__(self):
+        return peewee.PostgresqlDatabase('postgres', user='postgres', password='postgres', host='10.21.6.237', port=5432)
+
 
 class Peewee:
     BASE_CLASSES = (peewee.Model, )
@@ -20,7 +24,8 @@ class Peewee:
     }
 
     FACTORIES = {
-        'sqlite': PeeweeSqliteDbFactory
+        'sqlite': PeeweeSqliteDbFactory,
+        'postgres': PostgresDbFactory
     }
 
     @classmethod

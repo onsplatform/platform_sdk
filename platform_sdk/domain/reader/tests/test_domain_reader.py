@@ -116,3 +116,32 @@ def test_get_response_data_empty(db):
 
     # assert
     assert not data
+
+
+def test_execute_query(db):
+    # arrange
+    domain_reader = DomainReader(db)
+    api_response = {
+        "model": {"name": "Usina", "table": "tb_usina"},
+        "fields": [
+            {"column_name": "nome_longo", "alias": "nome", "field_type": "str"}
+        ],
+        "filters": [
+            {"name": "byName", "expression": 'nome_longo in $nomes and nome_longo != :nome1'},
+            {"name": "byIds", "expression": "id in $ids"}
+        ]
+    }
+
+    params = {
+        'ids': [1, 2,]
+    }
+ 
+    model = domain_reader._get_model(api_response['model'], api_response['fields'])
+    sql_filter = domain_reader._get_sql_filter('byIds', api_response['filters'])
+    sql_query = domain_reader._get_sql_query(sql_filter, params)
+
+    # action
+    data = domain_reader._execute_query(model, sql_query)
+
+    # assert
+    assert data[0].nome == 'ITAUPU'
