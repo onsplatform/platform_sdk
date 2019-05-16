@@ -24,7 +24,7 @@ class DomainReader:
 
     def _execute_query(self, model, sql_query):  # pragma: no cover
         proxy_model = model.build(self.db)
-        if (filter):
+        if (sql_query):
             query = proxy_model.select().where(SQL(sql_query['sql_query'], sql_query['query_params']))
         else:
             query = proxy_model.select()
@@ -32,27 +32,28 @@ class DomainReader:
         return list([d for d in query])
 
     def _get_sql_query(self, sql_filter, params):
-        query_params = ()
-        matches = re.finditer(r"([:,\$]\w+)", sql_filter, re.MULTILINE)
-        for arg in matches:
-            # named parameters, eg: $name :name
-            arg = arg.group()
-            # get named value from params
-            val = params.get(arg[1:])
-            # if parameter is list or begins with $, make tuple
-            if (isinstance(val, list)):
-                val = tuple(val,)
-            elif (arg[0:1] == '$'):
-                val = (val,)
-            # make a tuple
-            query_params = (*query_params, val)
-            # replace argument with %s
-            sql_filter = sql_filter.replace(arg, '%s')
+        if sql_filter:
+            query_params = ()
+            matches = re.finditer(r"([:,\$]\w+)", sql_filter, re.MULTILINE)
+            for arg in matches:
+                # named parameters, eg: $name :name
+                arg = arg.group()
+                # get named value from params
+                val = params.get(arg[1:])
+                # if parameter is list or begins with $, make tuple
+                if (isinstance(val, list)):
+                    val = tuple(val,)
+                elif (arg[0:1] == '$'):
+                    val = (val,)
+                # make a tuple
+                query_params = (*query_params, val)
+                # replace argument with %s
+                sql_filter = sql_filter.replace(arg, '%s')
 
-        return {
-            'sql_query': sql_filter,
-            'query_params': query_params
-        }
+            return {
+                'sql_query': sql_filter,
+                'query_params': query_params
+            }
 
     def _get_response_data(self, entities, fields):
         if entities:
@@ -68,5 +69,5 @@ class DomainReader:
             model['name'], model['table'], self._get_fields(fields), self.orm)
 
     def _get_sql_filter(self, filter_name, filters):
-        if filters:
+        if filters and filter_name != '':
             return next(f['expression'] for f in filters if f['name'] == filter_name)
