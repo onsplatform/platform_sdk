@@ -1,17 +1,17 @@
 from domain.reader import DomainReader
 
 
-def test_init_domain_reader(db):
+def test_init_domain_reader(db, schema_settings, db_settings):
     # arrange
-    domain_reader = DomainReader(db)
+    domain_reader = DomainReader(db, db_settings, schema_settings)
 
     # assert
     assert domain_reader.schema_api is not None
 
 
-def test_get_model(db):
+def test_get_model(db, schema_settings, db_settings):
     # arrange
-    domain_reader = DomainReader(db)
+    domain_reader = DomainReader(db, db_settings, schema_settings)
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
@@ -33,12 +33,13 @@ def test_get_model(db):
     assert model.fields[0].column_name == "nome_longo"
 
 
-def test_get_fields(db):
+def test_get_fields(db, schema_settings, db_settings):
     # arrange
-    fields_dict = [{'column_name': 'field_1', 'alias': 'alias_1', "field_type": "str"}]
+    fields_dict = [{'column_name': 'field_1',
+                    'alias': 'alias_1', "field_type": "str"}]
 
     # action
-    domain_reader = DomainReader(db)
+    domain_reader = DomainReader(db, db_settings, schema_settings)
     fields = domain_reader._get_fields(fields_dict)
 
     # assert
@@ -60,9 +61,10 @@ def test_get_data_with_no_api_response(db):
     assert data == None
 '''
 
-def test_get_response_data(db):
+
+def test_get_response_data(db, schema_settings, db_settings):
     # arrange
-    domain_reader = DomainReader(db)
+    domain_reader = DomainReader(db, db_settings, schema_settings)
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
@@ -91,9 +93,9 @@ def test_get_response_data(db):
     assert data[1]['descricao'] == 'descricao 2'
 
 
-def test_get_response_data_empty(db):
+def test_get_response_data_empty(db, schema_settings, db_settings):
     # arrange
-    domain_reader = DomainReader(db)
+    domain_reader = DomainReader(db, db_settings, schema_settings)
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
@@ -118,9 +120,9 @@ def test_get_response_data_empty(db):
     assert not data
 
 
-def test_execute_query(db):
+def test_execute_query(db, schema_settings, db_settings):
     # arrange
-    domain_reader = DomainReader(db)
+    domain_reader = DomainReader(db, db_settings, schema_settings)
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
@@ -133,11 +135,13 @@ def test_execute_query(db):
     }
 
     params = {
-        'ids': [1, 2,]
+        'ids': [1, 2, ]
     }
- 
-    model = domain_reader._get_model(api_response['model'], api_response['fields'])
-    sql_filter = domain_reader._get_sql_filter('byIds', api_response['filters'])
+
+    model = domain_reader._get_model(
+        api_response['model'], api_response['fields'])
+    sql_filter = domain_reader._get_sql_filter(
+        'byIds', api_response['filters'])
     sql_query = domain_reader._get_sql_query(sql_filter, params)
 
     # action

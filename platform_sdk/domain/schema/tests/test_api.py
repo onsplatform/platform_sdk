@@ -6,12 +6,19 @@ import requests_mock
 from domain.schema.api import SchemaApi
 
 
-def test_get_schema():
+@pytest.fixture
+def schema_settings():
+    return {
+        'api_url': 'http://localhost:3000/schema/',
+    }
+
+
+def test_get_schema(schema_settings):
     # arrange
     app = 'teif'
     solution = 'sager'
     _map = 'usinaDTO'
-    schema_api = SchemaApi()
+    schema_api = SchemaApi(schema_settings)
     api_response = {
         "model": {"name": "Usina", "table": "tb_usina"},
         "fields": [
@@ -36,12 +43,12 @@ def test_get_schema():
     assert response['fields'][0]['type'] == 'str'
 
 
-def test_get_schema_response_with_body():
+def test_get_schema_response_with_body(schema_settings):
     # arrange
     app = 'teif'
     solution = 'sager'
     str_map = 'usinaDTO'
-    schema_api = SchemaApi()
+    schema_api = SchemaApi(schema_settings)
 
     # action
     with requests_mock.Mocker() as m:
@@ -51,6 +58,7 @@ def test_get_schema_response_with_body():
 
     # assert
     assert response is not None
+
 
 '''
 def test_get_schema_response_with_no_body():
@@ -90,12 +98,12 @@ def test_get_schema_none():
 '''
 
 
-def test_get_url_schema_api():
+def test_get_url_schema_api(schema_settings):
     # arrange
     app = 'teif'
     solution = 'sager'
     str_map = 'usinaDTO'
-    schema_api = SchemaApi()
+    schema_api = SchemaApi(schema_settings)
     url_test = "http://localhost:3000/schema/sager/teif/usinaDTO"
 
     # action
