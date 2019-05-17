@@ -6,10 +6,10 @@ from peewee import SQL
 
 
 class DomainReader:
-    def __init__(self, orm):
+    def __init__(self, orm, db_settings, schema_settings):
         self.orm = orm
-        self.db = orm.db_factory('postgres')()
-        self.schema_api = SchemaApi()
+        self.db = orm.db_factory('postgres', **db_settings)()
+        self.schema_api = SchemaApi(schema_settings)
 
     def get_data(self, solution, app, _map, filter_name, params):
         api_response = self.schema_api.get_schema(solution, app, _map)

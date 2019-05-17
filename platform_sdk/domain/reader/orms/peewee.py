@@ -9,8 +9,11 @@ class PeeweeSqliteDbFactory:
         return peewee.SqliteDatabase(self.path)
 
 class PostgresDbFactory:
+    def __init__(self, *args, **kwargs):
+        self.kwargs = kwargs
+
     def __call__(self):
-        return peewee.PostgresqlDatabase('postgres', user='postgres', password='postgres', host='10.21.6.237', port=5432)
+        return peewee.PostgresqlDatabase(**self.kwargs)
 
 
 class Peewee:
