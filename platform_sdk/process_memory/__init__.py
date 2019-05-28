@@ -13,7 +13,7 @@ class ProcessMemoryApi():
     def _get_process_memory_response(self, process_memory_id):
         response = requests.get(
             self._get_process_memory_api_url(process_memory_id))
-        
+
         if response.ok:
             return response
 

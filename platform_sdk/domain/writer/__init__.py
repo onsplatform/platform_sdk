@@ -1,6 +1,4 @@
-from domain.reader.orms import *
-from domain.reader.mapper import *
-from process_memory import *
+from platform_sdk.process_memory import ProcessMemoryApi
 
 
 class DomainWriter:
