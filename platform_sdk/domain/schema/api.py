@@ -3,7 +3,7 @@ from platform_sdk.utils.http import HttpClient
 
 class SchemaApi:
     def __init__(self, schema_settings):
-        self.base_uri = schema_settings['api_url']
+        self.base_uri = schema_settings['uri']
         self.client = HttpClient()
 
     def get_schema(self, solution, app, _map):
