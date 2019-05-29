@@ -1,4 +1,4 @@
-from utils.http import HttpClient
+from platform_sdk.utils.http import HttpClient
 
 
 class SchemaApi:

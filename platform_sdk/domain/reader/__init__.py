@@ -1,8 +1,9 @@
 import re
 
+from peewee import SQL
+
 from .mapper import RemoteField, RemoteMap
 from ..schema.api import SchemaApi
-from peewee import SQL
 
 
 class DomainReader:

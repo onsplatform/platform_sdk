@@ -1,4 +1,4 @@
-from utils.http import HttpClient, HttpRequestResult
+from platform_sdk.utils.http import HttpClient, HttpRequestResult
 
 
 class TestHttpRequestResult:

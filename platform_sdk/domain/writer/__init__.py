@@ -1,4 +1,4 @@
-from process_memory import ProcessMemoryApi
+from platform_sdk.process_memory import ProcessMemoryApi
 
 
 class DomainWriter:

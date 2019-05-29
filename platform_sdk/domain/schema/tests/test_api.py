@@ -1,16 +1,16 @@
-import pytest
-import requests
-import requests_mock
+# import pytest
+# import requests
+# import requests_mock
 
 
-from domain.schema.api import SchemaApi
+# from domain.schema.api import SchemaApi
 
 
-@pytest.fixture
-def schema_settings():
-    return {
-        'api_url': 'http://localhost:3000/schema/',
-    }
+# @pytest.fixture
+# def schema_settings():
+#     return {
+#         'api_url': 'http://localhost:3000/schema/',
+#     }
 
 
 # def test_get_schema(schema_settings):

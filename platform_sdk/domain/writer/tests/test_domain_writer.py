@@ -1,8 +1,8 @@
 import os
 import pytest
-from domain.reader.orms.peewee import Peewee
 
-from domain.writer import DomainWriter
+from platform_sdk.domain.reader.orms.peewee import Peewee
+from platform_sdk.domain.writer import DomainWriter
 
 
 @pytest.fixture(scope='class')
