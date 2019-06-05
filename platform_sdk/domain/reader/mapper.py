@@ -7,15 +7,17 @@ class RemoteField:
 
 
 class RemoteMap:
-    def __init__(self, name, table, fields, orm):
+    def __init__(self, name, table, fields, orm, history=False):
         self.name = name
-        self.table = table
+        if history:
+            self.table = table + '_history'
+        else:
+            self.table = table
         self.fields = fields
         self.orm = orm
 
     def build(self, database):
-        fields = { f.name: self.orm.build_field(f) for f in self.fields }
+        fields = {f.name: self.orm.build_field(f) for f in self.fields}
         dyn_type = type(self.name, self.orm.BASE_CLASSES, fields)
         self.orm.build_class(dyn_type, self, database)
         return dyn_type
-

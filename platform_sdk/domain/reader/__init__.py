@@ -12,8 +12,8 @@ class DomainReader:
         self.db = orm.db_factory('postgres', **db_settings)()
         self.schema_api = SchemaApi(schema_settings)
 
-    def get_data(self, solution, app, _map, filter_name, params):
-        api_response = self.schema_api.get_schema(solution, app, _map)
+    def get_data(self, _map, filter_name, params, history=False):
+        api_response = self.schema_api.get_schema(_map)
 
         if api_response:
             model = self._get_model(api_response['model'], api_response['fields'])
@@ -63,9 +63,9 @@ class DomainReader:
         return [RemoteField(
             f['alias'], f['field_type'], f['column_name']) for f in fields]
 
-    def _get_model(self, model, fields):
+    def _get_model(self, model, fields, history=False):
         return RemoteMap(
-            model['name'], model['table'], self._get_fields(fields), self.orm)
+            model['name'], model['table'], self._get_fields(fields), self.orm, history)
 
     def _get_sql_filter(self, filter_name, filters):
         if filters and filter_name != '':

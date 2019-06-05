@@ -21,5 +21,5 @@ def db_settings():
 @pytest.fixture(scope='class')
 def schema_settings():
     return {
-        'api_url': 'http://localhost:3000/schema/',
+        'uri': 'http://localhost:3000/schema/',
     }
