@@ -12,5 +12,5 @@ class SchemaApi:
         if not result.has_error:
             return result.content
 
-    def get_uri(self, solution, _map):
+    def get_uri(self, _map):
         return  f'{self.base_uri}{_map}'

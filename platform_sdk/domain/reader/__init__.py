@@ -16,18 +16,20 @@ class DomainReader:
         api_response = self.schema_api.get_schema(_map)
 
         if api_response:
-            model = self._get_model(api_response['model'], api_response['fields'])
-            sql_filter = self._get_sql_filter(filter_name, api_response['filters'])
+            model = self._get_model(
+                api_response['model'], api_response['fields'], history)
+            sql_filter = self._get_sql_filter(
+                filter_name, api_response['filters'])
             sql_query = self._get_sql_query(sql_filter, params)
             data = self._execute_query(model, sql_query)
             return self._get_response_data(data, api_response['fields'])
-
 
     def _execute_query(self, model, sql_query):  # pragma: no cover
         proxy_model = model.build(self.db)
         query = proxy_model.select()
         if (sql_query):
-            query = query.where(SQL(sql_query['sql_query'], sql_query['query_params']))
+            query = query.where(
+                SQL(sql_query['sql_query'], sql_query['query_params']))
         return list([d for d in query])
 
     def _get_sql_query(self, sql_filter, params):
@@ -68,5 +70,5 @@ class DomainReader:
             model['name'], model['table'], self._get_fields(fields), self.orm, history)
 
     def _get_sql_filter(self, filter_name, filters):
-        if filters and filter_name != '':
+        if filters and filter_name and filter_name != '':
             return next(f['expression'] for f in filters if f['name'] == filter_name)
