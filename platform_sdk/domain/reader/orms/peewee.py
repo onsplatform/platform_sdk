@@ -39,9 +39,10 @@ class Peewee:
         return wrapper(null=True, column_name=field.column_name)
 
     @classmethod
-    def build_class(cls, dyn_type, _map, database):
+    def build_class(cls, dyn_type, _map, database, schema='public'):
         dyn_type._meta.table_name = _map.table
         dyn_type._meta.database = database
+        dyn_type._meta.schema = schema
 
     @classmethod
     def db_factory(cls, db, *args, **kwargs):

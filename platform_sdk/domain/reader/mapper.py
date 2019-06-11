@@ -9,7 +9,7 @@ class RemoteField:
 class RemoteMap:
     def __init__(self, name, table, fields, orm, history=False):
         self.name = name
-        self.table = f'entities.{table}'
+        self.table = f'{table}'
 
         if history:
             self.table = f'{self.table}_history'
@@ -20,5 +20,5 @@ class RemoteMap:
     def build(self, database):
         fields = {f.name: self.orm.build_field(f) for f in self.fields}
         dyn_type = type(self.name, self.orm.BASE_CLASSES, fields)
-        self.orm.build_class(dyn_type, self, database)
+        self.orm.build_class(dyn_type, self, database, schema='entities')
         return dyn_type
