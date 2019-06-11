@@ -26,6 +26,7 @@ class Peewee:
         'float': peewee.FloatField,
         'int': peewee.IntegerField,
         'timestamp': peewee.DateTimeField,
+        'uuid': peewee.UUIDField,
     }
 
     FACTORIES = {
