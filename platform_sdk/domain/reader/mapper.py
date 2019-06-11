@@ -9,10 +9,11 @@ class RemoteField:
 class RemoteMap:
     def __init__(self, name, table, fields, orm, history=False):
         self.name = name
+        self.table = f'entities.{table}'
+
         if history:
-            self.table = table + '_history'
-        else:
-            self.table = table
+            self.table = f'{self.table}_history'
+
         self.fields = fields
         self.orm = orm
 

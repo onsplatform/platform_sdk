@@ -1,3 +1,5 @@
+import os
+
 from platform_sdk.utils.http import HttpClient
 
 
@@ -13,4 +15,4 @@ class SchemaApi:
             return result.content
 
     def get_uri(self, _map):
-        return  f'{self.base_uri}{_map}'
+        return  os.path.join(self.base_uri, _map)

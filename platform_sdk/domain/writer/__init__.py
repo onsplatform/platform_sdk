@@ -24,8 +24,8 @@ class DomainWriter:
     def _execute_query(self, bulk_sql):  # pragma: no cover
         with self.db.atomic():
             for sql in bulk_sql:
-                print(sql)
-                # self.db.execute_sql(sql)
+                # print(sql)
+                self.db.execute_sql(sql)
 
     def _get_sql(self, entites, schema):
         bulk_sql = []
