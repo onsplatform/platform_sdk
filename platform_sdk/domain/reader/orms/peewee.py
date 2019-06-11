@@ -21,9 +21,11 @@ class Peewee:
 
     FIELD_TYPES = {
         'str': peewee.CharField,
+        'char': peewee.CharField,
         'bool': peewee.BooleanField,
         'float': peewee.FloatField,
         'int': peewee.IntegerField,
+        'timestamp': peewee.DateTimeField,
     }
 
     FACTORIES = {
