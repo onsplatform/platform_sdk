@@ -15,4 +15,4 @@ class SchemaApi:
             return result.content
 
     def get_uri(self, _map, _type):
-        return  os.path.join(self.base_uri, _map, _type)
+        return  '{}{}/{}'.format(self.base_uri, _map, _type)
