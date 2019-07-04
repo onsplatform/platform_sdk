@@ -11,8 +11,8 @@ class SchemaApi:
     def get_schema(self, _map, _type):
         uri = self.get_uri(_map, _type)
         result = self.client.get(uri)
-        if not result.has_error:
-            return result.content
+        if not result.has_error and result.content:
+            return result.content[0]
 
     def get_uri(self, _map, _type):
         return  '{}{}/{}'.format(self.base_uri, _map, _type)
