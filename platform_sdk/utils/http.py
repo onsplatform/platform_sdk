@@ -20,7 +20,7 @@ class HttpClient:
     @classmethod
     def execute(cls, func, *args, **kwargs):
         try:
-            response = func(*args, timeout=3, **kwargs)
+            response = func(*args, timeout=100, **kwargs)
             return HttpRequestResult.success(content=response.json())
 
         except requests.exceptions.HTTPError as err:
