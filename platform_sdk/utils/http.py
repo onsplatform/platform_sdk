@@ -1,5 +1,5 @@
 import requests
-
+import json
 
 class HttpRequestResult:
     def __init__(self, has_error=False, content=None, error_message=None):
@@ -35,7 +35,14 @@ class HttpClient:
         except requests.exceptions.RequestException as err:
             return HttpRequestResult.error(content=err, message='Generic Error')
 
-    def get(self, uri):
+    @classmethod
+    def get(self, uri,params = None):
+        if params is not None:
+            return self.execute(requests)
         return self.execute(requests.get, uri)
 
-    # TODO: implement post and put.
+    @classmethod
+    def post(self,url,body,params = None):
+        if params is not None:
+            return self.execute(requests.post,url,body,params) 
+        return self.execute(func=requests.post,url=url,data=json.dumps(body))
