@@ -1,6 +1,6 @@
 import os
 
-from platform_sdk.platform_sdk.utils.http import HttpClient
+from platform_sdk.utils.http import HttpClient
 
 class SystemCore:
 
