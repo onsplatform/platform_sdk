@@ -1,4 +1,4 @@
-from core_api.core_base_entity import CoreBaseEntity
+from .core_base_entity import CoreBaseEntity
 
 class Metadata(CoreBaseEntity):
 

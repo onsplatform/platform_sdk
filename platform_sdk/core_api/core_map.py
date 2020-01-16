@@ -1,4 +1,4 @@
-from core_api.base_entity import BaseCoreEntity
+from .core_base_entity import CoreBaseEntity
 
 class Map(BaseCoreEntity):
 
