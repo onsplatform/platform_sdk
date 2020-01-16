@@ -27,3 +27,7 @@ class SystemCore:
     def find_by_id(self, id):
         url = self.url + self.entity + '?filter=byId' + '&id=' + id
         return self.http_client.get(url)
+
+    def find_by_process_id(self, id):
+        url = self.url + self.entity + '?filter=byProcessId' + '&processId=' + id
+        return self.http_client.get(url)
