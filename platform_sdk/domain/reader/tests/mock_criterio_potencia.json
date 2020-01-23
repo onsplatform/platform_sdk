@@ -1,0 +1,119 @@
+[
+    {
+        "id": "2f546ac4-11eb-44e3-8372-883e5aa9bd80",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "586a4e1d-01f6-42e5-b321-65f071ac2800",
+        "valorpotencia": 100.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": null,
+            "from_id": null,
+            "branch": "master"
+        }
+    },
+    {
+        "id": "5bfb038e-623d-4bc7-9dc4-39c1558a0c50",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "586a4e1d-01f6-42e5-b321-65f071ac2800",
+        "valorpotencia": 3000.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": null,
+            "from_id": null,
+            "branch": "master"
+        }
+    },
+    {
+        "id": "c0f1971e-b341-4c35-8aa1-9d637f84b09c",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "586a4e1d-01f6-42e5-b321-65f071ac2800",
+        "valorpotencia": 200.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": null,
+            "from_id": null,
+            "branch": "master"
+        }
+    },
+    {
+        "id": "49bc75ee-b620-41c8-80f5-d8bb83d3f2d9",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "49814f2b-eb8c-4a7f-8213-d7f15dc74497",
+        "valorpotencia": 100.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": null,
+            "from_id": null,
+            "branch": "master"
+        }
+    },
+    {
+        "id": "fc88a83b-2f0f-463d-a933-0133ad52ab85",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "49814f2b-eb8c-4a7f-8213-d7f15dc74497",
+        "valorpotencia": 3000.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": null,
+            "from_id": null,
+            "branch": "master"
+        }
+    },
+    {
+        "id": "e6946a8b-0a38-45d6-b218-ff12c556c71f",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "49814f2b-eb8c-4a7f-8213-d7f15dc74497",
+        "valorpotencia": 200.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": null,
+            "from_id": null,
+            "branch": "master"
+        }
+    },
+    {
+        "id": "cf0adb06-f9dc-4e5c-954d-98bc776f7347",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "cbc1ba54-da0a-44f5-88c3-32da2ad071b2",
+        "valorpotencia": 100.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": "2020-01-22T11:32:49.138579",
+            "from_id": null,
+            "branch": "master"
+        }
+    },
+    {
+        "id": "bf800735-83d2-4867-8043-be8b95a082ca",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "cbc1ba54-da0a-44f5-88c3-32da2ad071b2",
+        "valorpotencia": 3000.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": "2020-01-22T11:32:49.138579",
+            "from_id": null,
+            "branch": "master"
+        }
+    },
+    {
+        "id": "fddcd109-40f2-434b-97c2-13053dfb7967",
+        "idcriteriocenario": "",
+        "idconfiguracaocenario": "cbc1ba54-da0a-44f5-88c3-32da2ad071b2",
+        "valorpotencia": 200.0,
+        "_metadata": {
+            "deleted": false,
+            "instance_id": null,
+            "modified_at": "2020-01-22T11:32:49.138579",
+            "from_id": null,
+            "branch": "master"
+        }
+    }
+]
