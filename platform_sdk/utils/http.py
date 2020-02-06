@@ -1,5 +1,5 @@
-import requests
 import json
+import requests
 
 
 class HttpRequestResult:
@@ -22,6 +22,7 @@ class HttpClient:
     def execute(cls, func, *args, **kwargs):
         try:
             response = func(*args, timeout=100, **kwargs)
+            response.raise_for_status()
             return HttpRequestResult.success(content=response.json())
 
         except requests.exceptions.HTTPError as err:
@@ -43,7 +44,5 @@ class HttpClient:
         return self.execute(requests.get, uri)
 
     @classmethod
-    def post(self, url, body, params=None):
-        if params is not None:
-            return self.execute(requests.post, url, body, params)
+    def post(self, url, body):
         return self.execute(func=requests.post, url=url, data=json.dumps(body))
