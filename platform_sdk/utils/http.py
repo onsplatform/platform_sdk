@@ -46,3 +46,8 @@ class HttpClient:
     @classmethod
     def post(self, url, body):
         return self.execute(func=requests.post, url=url, data=json.dumps(body))
+
+    @classmethod
+    def put(self, url, body):
+        headers = {'content-type': 'application/json'}
+        return self.execute(func=requests.put, url=url, data=json.dumps(body), headers=headers)

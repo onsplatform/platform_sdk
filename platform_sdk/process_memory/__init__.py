@@ -43,6 +43,12 @@ class ProcessMemoryApi():
         if not response.has_error:
             return response.content
 
+    def get_event(self, process_memory_id):
+        response = self.client.get(self._get_event_url(process_memory_id))
+
+        if not response.has_error:
+            return response.content
+
     def get_entities(self, process_memory_id):
         response = self.client.get(self._get_entities_url(process_memory_id))
 
@@ -72,6 +78,9 @@ class ProcessMemoryApi():
 
     def _get_entities_url(self, process_memory_id):
         return self.url_process_memory_api + 'entities/%s' % process_memory_id
+
+    def _get_event_url(self, process_memory_id):
+        return self.url_process_memory_api + 'event/%s' % process_memory_id
 
     def _get_with_entities_type_url(self):
         return self.url_process_memory_api + 'entities/with/type'
