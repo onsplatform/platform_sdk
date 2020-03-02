@@ -21,6 +21,7 @@ class CoreBaseEntity:
                 'type': self.entity,
                 'changeTrack': 'create'
             }
+
         url = self.url + 'persist'
         return self.http_client.post(url, mapping)
 
