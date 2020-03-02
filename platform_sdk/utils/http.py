@@ -46,12 +46,12 @@ class HttpClient:
 
     @classmethod
     def post(self, url, body):
-        return self.execute(func=requests.post, url=url, data=json.dumps(body, default=converter))
+        return self.execute(func=requests.post, url=url, data=json.dumps(body, default=self.converter))
 
     @classmethod
     def put(self, url, body):
         headers = {'content-type': 'application/json'}
-        return self.execute(func=requests.put, url=url, data=json.dumps(body, default=converter), headers=headers)
+        return self.execute(func=requests.put, url=url, data=json.dumps(body, default=self.converter), headers=headers)
 
     def converter(o):
         if isinstance(o, datetime.datetime):
