@@ -35,7 +35,7 @@ class SchemaApi:
             return [solution for solution in solutions if solution['is_reprocessable']]
 
     def _get_solutions_uri(self):
-        return '{}solution'.format(self.base_uri)
+        return '{}solution/'.format(self.base_uri)
 
     def _get_solution_byid_uri(self, id):
         return '{}solution/{}/'.format(self.base_uri, id)
