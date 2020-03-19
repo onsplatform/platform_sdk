@@ -6,8 +6,8 @@ class SchemaApi:
         self.base_uri = schema_settings['uri']
         self.client = HttpClient()
 
-    def get_schema(self, _map, _type):
-        uri = self._get_uri(_map, _type)
+    def get_schema(self, _map, _version, _type):
+        uri = self._get_uri(_map, _version, _type)
         result = self.client.get(uri)
         if not result.has_error and result.content:
             return result.content[0]
@@ -43,5 +43,5 @@ class SchemaApi:
     def _get_solution_byname_uri(self, solution):
         return '{}solution/byname/{}'.format(self.base_uri, solution)
 
-    def _get_uri(self, _map, _type):
-        return '{}{}/{}'.format(self.base_uri, _map, _type)
+    def _get_uri(self, _map, _version, _type):
+        return '{}{}/{}/{}'.format(self.base_uri, _map, _version, _type)
