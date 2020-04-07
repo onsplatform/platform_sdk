@@ -67,6 +67,20 @@ class ProcessMemoryApi():
         if not response.has_error:
             return response.content
 
+    def get_events_between_dates(self, process_id, date_begin_validity, date_end_validity):
+        request = {
+           'process_id' : process_id,
+           'date_begin_validity' : date_begin_validity,
+           'date_end_validity' : date_end_validity
+        }
+        response = self.client.post(self._get_between_dates_url(), request)
+
+        if not response.has_error:
+            return response.content
+
+    def _get_between_dates_url(self):
+        return self.url_process_memory_api + 'events/between/dates'
+
     def _get_head_url(self, process_memory_id):
         return self.url_process_memory_api + '%s/head' % process_memory_id
 
