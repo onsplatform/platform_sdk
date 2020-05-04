@@ -35,6 +35,12 @@ class ProcessMemoryApi():
         if not response.has_error:
             return response.content
 
+    def get_instance_filters_by_process_memories_ids(self, instace_ids):
+        response = self.client.post(self._get_instance_filter_by_processmemories_ids_url(),
+                                    {'instance_ids': instace_ids})
+        if not response.has_error:
+            return response.content
+
     def get_entities(self, process_memory_id):
         response = self.client.get(self._get_entities_url(process_memory_id))
 
@@ -84,6 +90,9 @@ class ProcessMemoryApi():
 
     def _get_instance_filter_url(self, process_memory_id):
         return self.url_process_memory_api + 'instance_filter/%s' % process_memory_id
+
+    def _get_instance_filter_by_processmemories_ids_url(self):
+        return self.url_process_memory_api + '/instance_filters/byprocessmemoriesids'
 
     def _get_by_tags_url(self):
         return self.url_process_memory_api + 'instances/bytags'
