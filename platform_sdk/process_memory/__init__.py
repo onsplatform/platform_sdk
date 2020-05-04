@@ -31,7 +31,8 @@ class ProcessMemoryApi():
             return response.content
 
     def get_instance_filter(self, process_memory_id):
-        response = self.client.get(self._get_instance_filter_url(process_memory_id))
+        response = self.client.get(
+            self._get_instance_filter_url(process_memory_id))
         if not response.has_error:
             return response.content
 
@@ -54,7 +55,11 @@ class ProcessMemoryApi():
             return response.content
 
     def get_by_tags(self, tags):
-        response = self.client.post(self._get_by_tags_url(), tags)
+        request = {
+            'tables_grouped_by_tags': tags
+        }
+
+        response = self.client.post(self._get_by_tags_url(), request)
 
         if not response.has_error:
             return response.content

@@ -9,7 +9,7 @@ class SchemaApi:
 
     def get_reprocessable_tables_grouped_by_tags(self, tag_and_entities):
         uri = self._get_reprocessable_tables_grouped_by_tags_uri()
-        result = self.client.post(uri, data=tag_and_entities)
+        result = self.client.post(uri, tag_and_entities)
         if not result.has_error and result.content:
             return result.content
 
