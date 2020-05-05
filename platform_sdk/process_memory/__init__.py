@@ -47,6 +47,12 @@ class ProcessMemoryApi():
 
         if not response.has_error:
             return response.content
+      
+    def get_instance_filters_by_instance_ids_and_types(self, instances_and_types):
+        response = self.client.post(self._get_instance_filters_by_instance_ids_and_types_url(),
+                                    {'instances_and_types': instances_and_types})
+        if not response.has_error:
+            return response.content
 
     def get_using_entities(self, entities):
         response = self.client.post(self._get_using_entities_url(), entities)
@@ -104,3 +110,6 @@ class ProcessMemoryApi():
 
     def _get_using_entities_url(self):
         return self.url_process_memory_api + 'instances/reprocessable/byentities'
+            
+    def _get_instance_filters_by_instance_ids_and_types_url(self):
+        return self.url_process_memory_api + '/instance_filters/byinstanceidsandtypes' 
