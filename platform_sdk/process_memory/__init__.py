@@ -103,7 +103,7 @@ class ProcessMemoryApi():
         return self.url_process_memory_api + 'instance_filter/%s' % process_memory_id
 
     def _get_instance_filter_by_instance_ids_url(self):
-        return self.url_process_memory_api + '/instance_filters/byinstanceids'
+        return self.url_process_memory_api + 'instance_filters/byinstanceids'
 
     def _get_by_tags_url(self):
         return self.url_process_memory_api + 'instances/bytags'
@@ -112,4 +112,4 @@ class ProcessMemoryApi():
         return self.url_process_memory_api + 'instances/reprocessable/byentities'
             
     def _get_instance_filters_by_instance_ids_and_types_url(self):
-        return self.url_process_memory_api + '/instance_filters/byinstanceidsandtypes' 
+        return self.url_process_memory_api + 'instance_filters/byinstanceidsandtypes' 
