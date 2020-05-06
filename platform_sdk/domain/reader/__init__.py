@@ -18,6 +18,9 @@ class DomainReaderApi:
         request = {'entities': entities, 'filters': filters}
         response = self.client.post(uri, request)
 
+        if not response.has_error:
+            return response.content
+
     def _mount_uri(self, _map, _version, _type, _filter):
         return '{}{}/{}/{}/{}'.format(self.base_uri, _map, _version, _type, _filter)
         
