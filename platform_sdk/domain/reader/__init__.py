@@ -14,7 +14,7 @@ class DomainReaderApi:
             return response.content
     
     def instances_which_queries_would_find_any_touched_entity(self, entities, filters):
-        uri = _get_instances_which_queries_would_find_any_touched_entity_uri()
+        uri = self._get_instances_which_queries_would_find_any_touched_entity_uri()
         request = {'entities': entities, 'filters': filters}
         response = self.client.post(uri, request)
 
