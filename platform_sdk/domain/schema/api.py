@@ -51,7 +51,7 @@ class SchemaApi:
         return '{}solution/byname/{}'.format(self.base_uri, solution)
 
     def _get_uri(self, _map, _version, _type):
-        return '{}{}/{}/{}'.format(self.base_uri, _map, _version, _type)
+        return '{}entitymap/{}/{}/{}'.format(self.base_uri, _map, _version, _type)
 
     def _get_reprocessable_tables_grouped_by_tags_uri(self):
         return f'{self.base_uri}appversion/byreprocessableentities'
