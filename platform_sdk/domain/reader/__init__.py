@@ -12,6 +12,19 @@ class DomainReaderApi:
 
         if not response.has_error:
             return response.content
+    
+    def instances_which_queries_would_find_any_touched_entity(self, entities, filters):
+        uri = self._get_instances_which_queries_would_find_any_touched_entity_uri()
+        request = {'entities': entities, 'filters': filters}
+        response = self.client.post(uri, request)
+
+        if not response.has_error:
+            return response.content
 
     def _mount_uri(self, _map, _version, _type, _filter):
         return '{}{}/{}/{}/{}'.format(self.base_uri, _map, _version, _type, _filter)
+        
+    def _get_instances_which_queries_would_find_any_touched_entity_uri(self):
+        return '{}{}'.format(self.base_uri, 'instanceswhichquerieswouldreturnentity')
+
+    
