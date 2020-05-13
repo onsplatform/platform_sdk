@@ -28,11 +28,18 @@ class SchemaApi:
             uri = self._get_solution_byid_uri(solution['id'])
             self.client.put(uri, solution)
 
-    def is_reprocessing(self, solution):
+    def get_solution_by_name(self, solution):
         uri = self._get_solution_byname_uri(solution)
         result = self.client.get(uri)
         if not result.has_error and result.content:
-            return result.content[0]['is_reprocessing']
+            return result.content[0]
+    
+    def is_reprocessing(self, solution):
+        uri = self._get_active_reprocess_bysolutionid_uri(solution)
+        result = self.client.get(uri)
+        if not result.has_error and result.content:
+            return True
+        return False
 
     def get_reprocessable_solutions(self):
         uri = self._get_solutions_uri()
@@ -49,6 +56,9 @@ class SchemaApi:
 
     def _get_solution_byname_uri(self, solution):
         return '{}solution/byname/{}'.format(self.base_uri, solution)
+    
+    def _get_active_reprocess_bysolutionid_uri(self, solution):
+        return '{}reprocess/actives/bysolutionid/{}'.format(self.base_uri, solution)
 
     def _get_uri(self, _map, _version, _type):
         return '{}entitymap/{}/{}/{}'.format(self.base_uri, _map, _version, _type)
