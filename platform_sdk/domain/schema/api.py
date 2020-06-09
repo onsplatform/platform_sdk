@@ -6,7 +6,6 @@ class SchemaApi:
         self.base_uri = schema_settings['uri']
         self.client = HttpClient()
 
-
     def get_reprocessable_tables_grouped_by_tags(self, tag_and_entities):
         uri = self._get_reprocessable_tables_grouped_by_tags_uri()
         result = self.client.post(uri, tag_and_entities)
@@ -17,7 +16,22 @@ class SchemaApi:
         uri = self._get_uri(_map, _version, _type)
         result = self.client.get(uri)
         if not result.has_error and result.content:
-            return result.content[0]
+            schema = result.content[0]
+            by_id_filter = [filter for filter in schema['filters'] if filter['name'].lower() == 'byid']
+            if not by_id_filter:
+                schema['filters'].append(
+                    {
+                        'name': 'byId',
+                        'expression': 'id = :id',
+                        'parameters': [
+                            {
+                                'name': 'id',
+                                'is_array': False
+                            }
+                        ]
+                    }
+                )
+        return schema
 
     def set_reprocessing(self, solution):
         uri = self._get_solution_byname_uri(solution)
@@ -33,7 +47,7 @@ class SchemaApi:
         result = self.client.get(uri)
         if not result.has_error and result.content:
             return result.content[0]
-    
+
     def is_reprocessing(self, solution):
         uri = self._get_active_reprocess_bysolutionid_uri(solution)
         result = self.client.get(uri)
@@ -61,6 +75,15 @@ class SchemaApi:
         if not result.has_error and result.content:
             return result.content
 
+    def get_branch(self, name):
+        uri = self._get_branch_by_name_uri(name)
+        result = self.client.get(uri)
+        if not result.has_error and result.content:
+            return result.content[0]
+
+    def _get_branch_by_name_uri(self, name):
+        return f'{self.base_uri}branchbyname/{name}'
+
     def _get_solutions_uri(self):
         return '{}solution/'.format(self.base_uri)
 
@@ -69,7 +92,7 @@ class SchemaApi:
 
     def _get_solution_byname_uri(self, solution):
         return '{}solution/byname/{}'.format(self.base_uri, solution)
-    
+
     def _get_active_reprocess_bysolutionid_uri(self, solution):
         return '{}reprocess/actives/bysolutionid/{}'.format(self.base_uri, solution)
 
