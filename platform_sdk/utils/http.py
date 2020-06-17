@@ -22,7 +22,7 @@ class HttpClient:
     @classmethod
     def execute(cls, func, *args, **kwargs):
         try:
-            response = func(*args, timeout=100, **kwargs)
+            response = func(*args, timeout=300, **kwargs)
             response.raise_for_status()
             return HttpRequestResult.success(content=response.json())
 
