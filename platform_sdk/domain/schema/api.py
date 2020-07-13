@@ -69,26 +69,32 @@ class SchemaApi:
             solutions = result.content
             return [solution for solution in solutions if solution['is_reprocessable']]
 
+    def get_solution(self, solution_id):
+        uri = self._get_solution_byid_uri(solution_id)
+        result = self.client.get(uri)
+        if not result.has_error and result.content:
+            return result.content
+
     def get_solutions(self):
         uri = self._get_solutions_uri()
         result = self.client.get(uri)
         if not result.has_error and result.content:
             return result.content
 
-    def get_branch(self, name):
-        uri = self._get_branch_by_name_uri(name)
+    def get_branch(self, name, solution_name):
+        uri = self._get_branch_uri(name, solution_name)
         result = self.client.get(uri)
         if not result.has_error and result.content:
             return result.content[0]
 
-    def _get_branch_by_name_uri(self, name):
-        return f'{self.base_uri}branchbyname/{name}'
+    def _get_branch_uri(self, name, solution_name):
+        return f'{self.base_uri}branch/{solution_name}/{name}'
 
     def _get_solutions_uri(self):
         return '{}solution/'.format(self.base_uri)
 
-    def _get_solution_byid_uri(self, id):
-        return '{}solution/{}/'.format(self.base_uri, id)
+    def _get_solution_byid_uri(self, solution_id):
+        return '{}solution/{}/'.format(self.base_uri, solution_id)
 
     def _get_solution_byname_uri(self, solution):
         return '{}solution/byname/{}'.format(self.base_uri, solution)
