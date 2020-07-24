@@ -17,21 +17,22 @@ class SchemaApi:
         result = self.client.get(uri)
         if not result.has_error and result.content:
             schema = result.content[0]
-            by_id_filter = [filter for filter in schema['filters'] if filter['name'].lower() == 'byid']
-            if not by_id_filter:
-                schema['filters'].append(
-                    {
-                        'name': 'byId',
-                        'expression': 'id = :id',
-                        'parameters': [
-                            {
-                                'name': 'id',
-                                'is_array': False
-                            }
-                        ]
-                    }
-                )
-        return schema
+            if schema:
+                by_id_filter = [filter for filter in schema['filters'] if filter['name'].lower() == 'byid']
+                if not by_id_filter:
+                    schema['filters'].append(
+                        {
+                            'name': 'byId',
+                            'expression': 'id = :id',
+                            'parameters': [
+                                {
+                                    'name': 'id',
+                                    'is_array': False
+                                }
+                            ]
+                        }
+                    )
+                return schema
 
     def set_reprocessing(self, solution):
         uri = self._get_solution_byname_uri(solution)
