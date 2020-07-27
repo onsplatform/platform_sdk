@@ -64,7 +64,7 @@ class SchemaApi:
         return False
 
     def get_reproduction_status(self, reproductionId):
-        uri = self._get_reproduction_status_byreproductionid_uri(solution, reproductionId)
+        uri = self._get_reproduction_status_byreproductionid_uri(reproductionId)
         result = self.client.get(uri)
         
         if not result.has_error and result.content:
