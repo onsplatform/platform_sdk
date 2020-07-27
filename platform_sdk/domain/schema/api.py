@@ -75,6 +75,7 @@ class SchemaApi:
                 response['status'] = 'finished'
         else:
             response['status'] = 'not_found'
+        return response
 
     def get_reprocessable_solutions(self):
         uri = self._get_solutions_uri()
