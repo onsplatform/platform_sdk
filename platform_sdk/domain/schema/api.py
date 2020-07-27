@@ -67,13 +67,14 @@ class SchemaApi:
         uri = self._get_reproduction_status_byreproductionid_uri(reproductionId)
         result = self.client.get(uri)
         
+        response = dict()
         if not result.has_error and result.content:
             if [item for item in result.content if item['is_reproducing'] is True]:
-                return {status: 'active'}
+                response['status'] = 'active'
             else:
-                return {status: 'finished'}
+                response['status'] = 'finished'
         else:
-            return {status: 'not_found'}
+            response['status'] = 'not_found'
 
     def get_reprocessable_solutions(self):
         uri = self._get_solutions_uri()
